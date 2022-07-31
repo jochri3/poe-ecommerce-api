@@ -39,4 +39,10 @@ export class Product {
 
   @Column({ name: 'stock_quantity', default: 0 })
   stockQuantity;
+
+  @Column({ name: 'created_at' })
+  createdAt: Date;
+
+  @Column({ name: 'updated_at' })
+  updatedAt: Date;
 }
