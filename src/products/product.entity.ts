@@ -30,12 +30,13 @@ export class Product {
   @Column({ name: 'image_url' })
   imageUrl: string;
 
+  //@Todo: Index???
   @Column()
   price: number;
 
   @Column()
   description: string;
 
-  @Column({ name: 'stock_quantity' })
+  @Column({ name: 'stock_quantity', default: 0 })
   stockQuantity;
 }
