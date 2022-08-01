@@ -5,6 +5,8 @@ import { CreateCategoryDto } from './dtos/create-category.dto';
 @Controller('categories')
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
+
+  // @TODO : Responses format
   @Get()
   findAll() {
     return this.categoriesService.findAll();
