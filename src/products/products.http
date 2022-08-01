@@ -1,0 +1,16 @@
+### Get all products
+GET http://localhost:3000/api/v1/products
+
+### Add a product
+POST http://localhost:3000/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Lite Racer",
+  "manufacturer": "Addidas",
+  "categoryId": 2,
+  "imageUrl": "https://assets.adidas.com/images/w_600,f_auto,q_auto/ca24fcd6f82c434890f0ad4400fe48f2_9366/Lite_Racer_3.0_Shoes_White_GW7955_01_standard.jpg",
+  "price": 66,
+  "stockQuantity": 45,
+  "description": "Good for running."
+}

@@ -1,17 +1,20 @@
 import {
   Check,
   Column,
+  CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../categories/category.entity';
 
 @Entity({ name: 'products' })
-@Unique(['name', 'category_id'])
-@Check(`"price>0`)
+// @Unique(['name', 'category'])
+@Check(`"price">0`)
 @Check(`"stock_quantity">=0`)
 export class Product {
   @PrimaryGeneratedColumn()
@@ -25,6 +28,7 @@ export class Product {
   manufacturer: string;
 
   @ManyToOne(() => Category, (category: Category) => category.products)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @Column({ name: 'image_url' })
@@ -38,11 +42,11 @@ export class Product {
   description: string;
 
   @Column({ name: 'stock_quantity', default: 0 })
-  stockQuantity;
+  stockQuantity: number;
 
-  @Column({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @Column({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

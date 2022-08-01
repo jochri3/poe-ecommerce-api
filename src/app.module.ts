@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './categories/category.entity';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { Product } from './products/product.entity';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { ProductsModule } from './products/products.module';
           port: config.get<number>('DB_PORT'),
           username: config.get<string>('DB_USER'),
           password: config.get<string>('DB_PASSWORD'),
-          entities: [Category],
+          entities: [Category, Product],
           synchronize: true,
         };
       },
