@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Check,
   Column,
   CreateDateColumn,
@@ -11,9 +13,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../categories/category.entity';
+import slugify from 'slugify';
+import { slugOptions } from '../constants/slug-options';
 
 @Entity({ name: 'products' })
 // @Unique(['name', 'category'])
+@Unique(['slug'])
 @Check(`"price">0`)
 @Check(`"stock_quantity">=0`)
 export class Product {
@@ -23,6 +28,10 @@ export class Product {
   @Column()
   @Index()
   name: string;
+
+  @Column({ nullable: true })
+  @Index()
+  slug: string;
 
   @Column()
   manufacturer: string;
@@ -49,4 +58,10 @@ export class Product {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  slugifyName() {
+    this.slug = slugify(this.name, slugOptions);
+  }
 }
