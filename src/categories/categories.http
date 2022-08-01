@@ -3,7 +3,7 @@ POST http://localhost:3000/api/v1/categories
 Content-Type: application/json
 
 {
-  "name": "laptop & computers"
+  "name": "Ba soso na ba mabata"
 }
 
 ### List categories
