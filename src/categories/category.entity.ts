@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -14,7 +15,12 @@ export class Category {
   id: number;
 
   @Column()
+  @Index()
   name: string;
+
+  @Column()
+  @Index()
+  slug: string;
 
   @OneToMany(() => Product, (product) => product.category)
   products: Product[];
