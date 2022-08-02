@@ -61,7 +61,7 @@ export class Product {
 
   @BeforeInsert()
   @BeforeUpdate()
-  slugifyName() {
+  slugify() {
     this.slug = slugify(this.name, slugOptions);
   }
 }

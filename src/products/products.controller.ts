@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateCategoryDto } from '../categories/dtos/create-category.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { CategoryQuery, NameOrManufacturer } from '../types/query';
 
 @Controller('products')
 export class ProductsController {
@@ -12,8 +12,19 @@ export class ProductsController {
   ) {}
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() query: CategoryQuery) {
+    const { category: slug } = query;
+    return this.productService.findAll(slug);
+  }
+
+  @Get('search')
+  async search(@Query() query: NameOrManufacturer) {
+    return this.productService.findByNameOrManufacturer(query.searchTerm);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.productService.findOne(id);
   }
 
   @Post()
@@ -21,4 +32,6 @@ export class ProductsController {
     const category = await this.categoryService.findOne(body.categoryId);
     return this.productService.create(body, category);
   }
+
+
 }

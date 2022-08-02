@@ -3,13 +3,18 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
 import { CreateCategoryDto } from './dtos/create-category.dto';
+import { CategoryQuery } from '../types/query';
 
 @Injectable()
 export class CategoriesService {
   constructor(@InjectRepository(Category) private repo: Repository<Category>) {}
 
   findAll() {
-    return this.repo.find();
+    return this.repo.find({
+      order: {
+        name: 'ASC',
+      },
+    });
   }
 
   async findOne(id: number) {

@@ -14,3 +14,6 @@ Content-Type: application/json
   "stockQuantity": 45,
   "description": "Good for running."
 }
+
+### Search product by name or manufacturer
+GET http://localhost:3000/api/v1/products/search?searchTerm=levi
