@@ -1,22 +1,38 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  Index,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import slugify from 'slugify';
 
-@Entity()
-export class Category {
-  @PrimaryGeneratedColumn()
-  id: number;
+import { Product } from '../products/product.entity';
+import { slugOptions } from '../constants/slug-options';
+import { BaseEntity } from '../utils/base.entity';
 
+@Entity({ name: 'categories' })
+@Unique(['slug'])
+export class Category extends BaseEntity {
   @Column()
+  @Index()
   name: string;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  @Column({ nullable: true })
+  @Index()
+  slug: string;
 
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  slugifyName() {
+    this.slug = slugify(this.name, slugOptions);
+  }
 }
