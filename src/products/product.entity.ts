@@ -15,13 +15,14 @@ import {
 import { Category } from '../categories/category.entity';
 import slugify from 'slugify';
 import { slugOptions } from '../constants/slug-options';
+import { BaseEntity } from '../utils/base.entity';
 
 @Entity({ name: 'products' })
 // @Unique(['name', 'category'])
 @Unique(['slug'])
 @Check(`"price">0`)
 @Check(`"stock_quantity">=0`)
-export class Product {
+export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

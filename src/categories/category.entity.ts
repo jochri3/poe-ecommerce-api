@@ -14,13 +14,11 @@ import slugify from 'slugify';
 
 import { Product } from '../products/product.entity';
 import { slugOptions } from '../constants/slug-options';
+import { BaseEntity } from '../utils/base.entity';
 
 @Entity({ name: 'categories' })
 @Unique(['slug'])
-export class Category {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Category extends BaseEntity {
   @Column()
   @Index()
   name: string;
@@ -31,12 +29,6 @@ export class Category {
 
   @OneToMany(() => Product, (product) => product.category)
   products: Product[];
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: { origin: '*' } });
@@ -10,7 +11,14 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  console.log(process.env.NODE_ENV);
+  const options = new DocumentBuilder()
+    .setTitle('POE Ecommerce')
+    .setDescription('API for the ecommerce UI application')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
 bootstrap();

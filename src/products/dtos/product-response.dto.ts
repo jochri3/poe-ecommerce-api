@@ -1,7 +1,9 @@
-import { IsNumber, IsString, Min } from 'class-validator';
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
-export class CreateProductDto {
+export class ProductResponseDto {
+  @Expose()
+  id: number;
+
   @Expose()
   name: string;
 
@@ -21,11 +23,5 @@ export class CreateProductDto {
   description: string;
 
   @Expose()
-  stockQuantity;
-
-  @Exclude()
-  createdAt: Date;
-
-  @Exclude()
-  updatedAt: Date;
+  slug: string;
 }

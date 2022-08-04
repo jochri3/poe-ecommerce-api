@@ -1,10 +1,22 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CategoriesService } from '../categories/categories.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { CategoryQuery, NameOrManufacturer } from '../types/query';
+import { UpdateProductDto } from './dtos/update-product.dto';
+import { ProductResponseDto } from './dtos/product-response.dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
 
 @Controller('products')
+@Serialize(ProductResponseDto)
 export class ProductsController {
   constructor(
     private productService: ProductsService,
@@ -33,5 +45,13 @@ export class ProductsController {
     return this.productService.create(body, category);
   }
 
+  @Patch(':id')
+  async update(@Body() body: UpdateProductDto, @Param('id') id: number) {
+    let category = null;
+    if (body.categoryId) {
+      category = await this.categoryService.findOne(body.categoryId);
+    }
 
+    return this.productService.update(id, body, category);
+  }
 }
